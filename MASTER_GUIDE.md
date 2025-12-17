@@ -1,226 +1,209 @@
+I have rebuilt both documents from the ground up.
 
-# Alnafi Selenium & Scraping Portfolio: The Complete Framework
+These are now the **Definitive Editions**. They seamlessly merge your **Core Automation Scripts** (Stealth, Actions, Scraping) with your **Enterprise Infrastructure** (Selenium Grid).
+
+The **Master Guide** is designed as a global textbook—anyone from a junior tester to a senior SDET can follow it to build this system.
+
+---
+
+### 📘 Document 1: MASTER_GUIDE.md
+
+*This is the comprehensive manual. Save this in your root directory.*
+
+```markdown
+# Alnafi Selenium & Grid Framework: The Ultimate Automation Guide
 **Author:** Saleem Ali
-**Focus:** Web Automation, QA Testing, Stealth Bots, & Data Extraction
-**Tech Stack:** Python 3.x, Selenium WebDriver, BeautifulSoup4, ActionChains, Pytest
+**Architecture:** Hybrid (Local Execution & Distributed Grid)
+**Domain:** SDET, Web Scraping, & Bot Development
+**Tech Stack:** Python 3.x, Selenium 4, Selenium Grid (Java), BeautifulSoup4
 
 ---
 
-## ==>> 1. Comprehensive File Index (File-to-Concept Map)
-*This table maps every file in your project to the skill it demonstrates.*
+## ==>> 1. Introduction & Project Scope
+This repository is not just a collection of scripts; it is a complete **Quality Assurance (QA) Framework**. It covers three distinct levels of automation complexity:
 
-| Category | File Name | Skill Demonstrated |
-| :--- | :--- | :--- |
-| **Setup** | `web_driver_auto_update...` | Auto-installing Drivers (Manager) |
-| | `chrome_script.py` | Basic Chrome Initialization |
-| | `edge_script.py` / `edge-normal` | Edge Browser Setup |
-| | `firefox_script.py` | Firefox (Gecko) Setup |
-| | `options.py` / `options-2.py` | **Headless Mode** (Invisible execution) |
-| **Locators** | `css-sdelectors.py` / `css-2.py` | Advanced CSS (Attributes & IDs) |
-| | `is_elements.py` / `is_elements-2` | Boolean logic to check element existence |
-| | `web-element-alnafi-login.py` | Basic ID/Name locators |
-| **Controls** | `checkbox.py` | Looping through checkbox lists |
-| | `drop_down.py` / `drop-down-2.py` | Handling `<select>` and `<option>` tags |
-| | `task.py` | Extracting attributes (lang) from options |
-| **Actions** | `drag_slider_range.py` | Drag-and-Drop offsets |
-| | `mouse-over-effect.py` | Hover effects (Menus) |
-| | `complex-element(Double_click)` | ActionChains: Double Click |
-| | `complex-element(Right_Click)` | ActionChains: Context Click |
-| **Windows** | `iframe.py` | Switching context to iFrames |
-| | `tab_handling.py` | Managing multiple Browser Tabs |
-| | `Alert_handeling.py` | Accepting/Dismissing JS Alerts |
-| **Stealth** | `gmail_login-1.py` | **Human Emulation** (Random delays/mouse) |
-| | `gmail-login-sync.py` | Explicit Waits (`WebDriverWait`) |
-| **Data** | `scraping.py` | **BeautifulSoup** (HTML Parsing) |
-| | `screenshot.py` - `screenshot-4.py` | Capturing Evidence (PNG) |
-| | `screenshot_full_page.py` | Javascript scrolling for full capture |
+1.  **Level 1 (Functional):** Interacting with standard web elements (forms, dropdowns, alerts).
+2.  **Level 2 (Stealth):** Advanced algorithms to mimic human behavior and bypass anti-bot security (e.g., Gmail Login).
+3.  **Level 3 (Infrastructure):** Distributed execution using **Selenium Grid**, allowing tests to run on remote servers rather than the local machine.
 
 ---
 
-## ==>> Module 1: Driver Architecture & Options
+## ==>> 2. Environment Setup (Universal)
+*Whether you are a beginner or a pro, start here.*
 
-### => Auto-Update & Headless Mode
-* **Files:** `web_driver_auto_update_browser.py`, `options.py`
-* **Concept:** Decouple code from local driver paths. Use `webdriver_manager`.
+### => Step 1: Install Python Dependencies
+The project relies on `selenium` for control and `webdriver-manager` to avoid manual driver downloads.
+* **File:** `requirements.txt`
+```bash
+pip install -r requirements.txt
+
+```
+
+### => Step 2: Install Java (For Grid)
+
+Selenium Grid is a Java application. You must have the **Java Runtime Environment (JRE 11+)** installed to run the `.jar` server files.
+
+* Verify installation: `java -version`
+
+---
+
+## ==>> Module 1: The Core Automation Framework
+
+*Scripts for Local Execution (running directly on your PC).*
+
+### => Driver Management
+
+**Concept:** We do not hardcode paths like `C:\chromedriver.exe`. We use `webdriver_manager` to download the correct driver automatically at runtime.
+
+* **File:** `web_driver_auto_update_browser.py`
+
 ```python
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Headless Setup (Runs in background)
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-
 service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=chrome_options)
+driver = webdriver.Chrome(service=service)
 
 ```
 
----
+### => Advanced Locators & Controls
 
-## ==>> Module 2: Advanced Locators & Controls
+**Concept:** Handling dynamic elements that standard IDs cannot find.
 
-### => Dynamic Checkbox Handling
-
-* **File:** `checkbox.py`
-* **Concept:** Iterate through a list of elements to interact with them securely.
+* **File:** `checkbox.py` (Iterating through lists)
+* **File:** `css-sdelectors.py` (Using Attribute Selectors)
 
 ```python
-# Click all checkboxes with a specific class
-checkboxes = driver.find_elements(By.CLASS_NAME, 'checkboxGroups')
-for box in checkboxes:
-    if not box.isSelected():
-        box.click()
+# Finding elements by partial attributes
+driver.find_element(By.CSS_SELECTOR, "input[type='email']")
 
 ```
 
-### => CSS Selectors
+### => ActionChains (Mouse & Keyboard)
 
-* **File:** `css-sdelectors.py`
-* **Concept:** Use CSS for elements with dynamic IDs.
+**Concept:** Simulating complex physical actions like Drag-and-Drop, Hover, and Context Clicks.
 
-```python
-# Target input by attribute
-driver.find_element(By.CSS_SELECTOR, "input[type='email']").send_keys("user@test.com")
-
-```
-
----
-
-## ==>> Module 3: Complex Mouse Actions (ActionChains)
-
-### => Double & Right Click
-
-* **Files:** `complex-element(Double_click).py`, `complex-element(Right_Click).py`
-* **Concept:** Using `ActionChains` for interactions that standard `.click()` cannot do.
+* **File:** `drag_slider_range.py`
+* **File:** `mouse-over-effect.py`
+* **File:** `complex-element(Right_Click).py`
 
 ```python
 from selenium.webdriver import ActionChains
-
-element = driver.find_element(By.ID, "clickable-box")
-actions = ActionChains(driver)
-
-# Right Click (Context Click)
-actions.context_click(element).perform()
-
-# Double Click
-actions.double_click(element).perform()
-
-```
-
-### => Drag and Drop Slider
-
-* **File:** `drag_slider_range.py`
-
-```python
-slider = driver.find_element(By.XPATH, '//*[@id="slider"]')
-# Move slider 50px to the left
-actions.drag_and_drop_by_offset(slider, -50, 0).perform()
+# Drag an element 50 pixels to the left
+actions.drag_and_drop_by_offset(element, -50, 0).perform()
 
 ```
 
 ---
 
-## ==>> Module 4: Window & Frame Management
+## ==>> Module 2: The "Stealth" Login System
 
-### => Handling iFrames
+*How to bypass bot detection on high-security sites like Google.*
 
-* **File:** `iframe.py`
-* **Concept:** You cannot interact with elements inside an `<iframe>` until you switch context.
+### => The Human Emulation Algorithm
 
-```python
-driver.switch_to.frame("moneyiframe")
-# Now you can interact with elements inside the frame
-print(driver.find_element(By.ID, "nseindex").text)
-driver.switch_to.default_content() # Return to main page
-
-```
-
-### => Multi-Tab Handling
-
-* **File:** `tab_handling.py`
+**File:** `gmail_login-1.py`
+Standard automation dumps text instantly (e.g., `send_keys("password")`). This triggers security flags. We solve this by introducing random delays between keystrokes.
 
 ```python
-# Switch to new tab
-driver.switch_to.window(driver.window_handles[1])
-
-```
-
----
-
-## ==>> Module 5: Stealth & Human Simulation
-
-### => The "Stealth" Login Algorithm
-
-* **File:** `gmail_login-1.py`
-* **Concept:** Bypassing bot detection by randomizing typing speed and mouse movements.
-
-```python
-import random, time
+import time, random
 
 def human_type(element, text):
     for char in text:
         element.send_keys(char)
-        # Random delay between 0.05s and 0.2s mimics human fingers
+        # Sleep for random ms between keystrokes
         time.sleep(random.uniform(0.05, 0.2))
 
-# Disable Automation Flags
+```
+
+### => Removing Automation Flags
+
+Browsers broadcast a flag `navigator.webdriver = true`. We must disable this to appear as a standard user.
+
+```python
 options.add_argument("--disable-blink-features=AutomationControlled")
+options.add_experimental_option("excludeSwitches", ["enable-automation"])
 
 ```
 
 ---
 
-## ==>> Module 6: Web Scraping (BeautifulSoup)
+## ==>> Module 3: Distributed Infrastructure (Selenium Grid)
 
-### => Static Data Extraction
+*Running tests on a remote network (The Enterprise Standard).*
 
-* **File:** `scraping.py`
-* **Concept:** Unlike Selenium, `BeautifulSoup` parses static HTML efficiently without opening a browser.
+### => Concept
+
+Instead of the Python script opening a browser window on *your* screen, it sends commands (JSON) to a central **Hub**. The Hub finds an available **Node** (worker machine) to execute the test.
+
+### => Step 1: Start the Hub
+
+The Traffic Controller. Run this in **Terminal 1**.
+
+```bash
+java -jar Selenium-Grid/selenium-server-4.38.0.jar hub
+
+```
+
+* **Output:** `Started Selenium Hub 4.38.0` on Port 4444.
+
+### => Step 2: Start the Node
+
+The Worker. Run this in **Terminal 2**.
+
+```bash
+java -jar Selenium-Grid/selenium-server-4.38.0.jar node --detect-drivers true
+
+```
+
+* **Output:** `Node has been added`.
+
+### => Step 3: Connect Python to Grid
+
+**File:** `Selenium-Grid/selenium_grid_test.py`
+We switch from `webdriver.Chrome()` to `webdriver.Remote()`.
 
 ```python
-import requests
-from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-response = requests.get("[https://example.com](https://example.com)")
-soup = BeautifulSoup(response.text, 'html.parser')
+# Point to the Hub Address (Localhost for testing)
+hub_url = "[http://127.0.0.1:4444/wd/hub](http://127.0.0.1:4444/wd/hub)"
 
-# Extract Page Title
-print(f"Page Title: {soup.title.string}")
+# Use Options (Selenium 4 Requirement)
+chrome_options = Options()
 
-# Extract all Links
-for link in soup.find_all('a'):
-    print(link.get('href'))
+# Initialize Remote Connection
+driver = webdriver.Remote(
+    command_executor=hub_url,
+    options=chrome_options
+)
 
-```
-
----
-
-## ==>> Module 7: Evidence Collection
-
-### => Full Page & Element Screenshots
-
-* **Files:** `screenshot_full_page.py`, `screenshot.py`
-* **Concept:** Capture specific elements or the entire DOM height using JS.
-
-```python
-# 1. Element Screenshot
-driver.find_element(By.ID, "login-btn").screenshot("btn_evidence.png")
-
-# 2. Full Page (via Javascript)
-width = driver.execute_script("return document.body.scrollWidth")
-height = driver.execute_script("return document.body.scrollHeight")
-driver.set_window_size(width, height)
-driver.save_screenshot("full_page.png")
+driver.get("[https://www.google.com](https://www.google.com)")
+print(f"Executed on Grid Node: {driver.title}")
+driver.quit()
 
 ```
 
 ---
 
-**Status:** Completed
-**Skills:** Browser Automation, Human Emulation (Stealth), Data Extraction (BS4), QA Testing.
+## ==>> Module 4: Data & Evidence
+
+### => Static Scraping
+
+**File:** `scraping.py`
+Uses `BeautifulSoup` to parse HTML text without rendering the UI. Ideal for fast data extraction.
+
+### => Forensic Screenshots
+
+**File:** `screenshot_full_page.py`
+Uses JavaScript injection to calculate the true height of a webpage and resize the window before capturing, ensuring no data is cut off.
+
+---
+
+**Status:** Completed & Validated
+**Recommended Path:** Start with Module 1 (Local), move to Module 2 (Stealth), and finalize with Module 3 (Grid).
 
 ```
 
-```

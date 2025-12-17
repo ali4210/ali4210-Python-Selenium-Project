@@ -1,55 +1,52 @@
 
-# Alnafi Selenium Automation Framework: Advanced Web Testing & Botting
+# Alnafi Selenium & Grid Framework: Enterprise Automation
 
 **Author:** Saleem Ali
-**Domain:** QA Automation, Web Scraping, & Bot Development
-**Tech Stack:** Python 3.x, Selenium WebDriver, BeautifulSoup4, ActionChains
+**Domain:** SDET, Distributed Testing, & Bot Automation
+**Tech Stack:** Python, Selenium Grid 4, BeautifulSoup, Java
 
 ---
 
 ## ==>> Project Overview
 
-This repository houses a comprehensive **Web Automation Framework** designed to simulate human behavior and interact with complex web elements. Unlike standard automation scripts that simply "click and type," this project implements advanced algorithms to bypass bot detection mechanisms using randomized delays and human-like mouse movements.
+This repository houses a production-grade **Distributed Automation Framework**. It goes beyond standard local testing by implementing **Selenium Grid 4**, allowing tests to be executed remotely across a network of nodes.
 
-The framework covers the entire spectrum of UI Automation, from handling dynamic DOM elements and iFrames to managing cross-browser compatibility layers for Chrome, Firefox, and Edge.
+The framework includes **Stealth Algorithms** to mimic human behavior (bypassing bot detection on platforms like Gmail) and a **Grid Infrastructure** capable of parallel execution, simulating a real-world CI/CD testing environment.
 
 ---
 
 ## ==>> System Architecture
 
-The following diagram illustrates the interaction flow between the Python automation scripts, the WebDriver manager, and the target web applications.
+The system utilizes a Hub-and-Node architecture to decouple the test script from the execution environment.
 
 ```mermaid
 graph LR
-    subgraph Client ["Automation Client"]
-        Python["Python Script"]
+    subgraph Client ["Client Side (Python)"]
+        Script["selenium_grid_test.py"]
         Stealth["Stealth Logic"]
-        Locators["Advanced Locators"]
     end
 
-    subgraph Driver_Layer ["WebDriver Manager"]
-        CM["ChromeDriver"]
-        GM["GeckoDriver"]
-        EM["EdgeDriver"]
+    subgraph Infrastructure ["Selenium Grid 4"]
+        Hub["Grid Hub (Port 4444)"]
+        Node1["Node A (Windows/Chrome)"]
+        Node2["Node B (Linux/Firefox)"]
     end
 
     subgraph Target ["Web Application"]
-        DOM["DOM Elements"]
-        Frames["Iframes & Popups"]
-        Auth["Authentication System"]
+        App["Google / Alnafi"]
     end
 
-    Python --> CM
-    Python --> GM
-    Python --> EM
-    CM --> Target
-    GM --> Target
-    EM --> Target
-    Stealth -.-> Auth
-    
+    %% Flow
+    Script -- "JSON Wire Protocol" --> Hub
+    Hub -- "Route Command" --> Node1
+    Hub -- "Route Command" --> Node2
+    Node1 -- "Control Browser" --> App
+    Node2 -- "Control Browser" --> App
+
+    %% Styling
     style Client fill:#f9f9f9,stroke:#333,stroke-width:2px
-    style Driver_Layer fill:#e1f5fe,stroke:#333,stroke-width:2px
-    style Target fill:#fff3e0,stroke:#333,stroke-width:2px
+    style Infrastructure fill:#e1f5fe,stroke:#333,stroke-width:2px
+    style Hub fill:#d35400,color:white
 
 ```
 
@@ -57,33 +54,21 @@ graph LR
 
 ## ==>> Key Technical Features
 
-### => 1. Stealth & Human Emulation
+### => 1. Distributed Execution (Selenium Grid)
 
-To interact with high-security platforms (such as Gmail), this framework implements a **"Human Typing"** algorithm.
+* **Hub Configuration:** Centralized server management using `selenium-server-4.38.0.jar`.
+* **Node Management:** Dynamic registration of nodes with auto-driver detection.
+* **Remote WebDriver:** Implementation of `webdriver.Remote` to execute tests on decoupled environments.
 
-* **Randomized Delays:** Keystrokes are sent with random time intervals (e.g., 0.05s to 0.2s) to mimic natural typing rhythm.
-* **Mouse Movement:** Mouse cursor paths are randomized using `ActionChains` to avoid straight-line robotic detection.
-* **Flag Removal:** Disables the `AutomationControlled` flag in the browser to prevent detection by anti-bot systems.
+### => 2. Stealth & Human Emulation
 
-### => 2. Advanced Mouse & Keyboard Actions
+* **Bot Avoidance:** Custom algorithms (`human_type`) with randomized keystroke delays (0.05s - 0.2s).
+* **Flag Removal:** Disabling `AutomationControlled` flags to bypass anti-bot security layers.
 
-The project utilizes the `ActionChains` class to handle complex UI interactions that standard clicks cannot perform:
+### => 3. Advanced UI Interaction
 
-* **Drag & Drop:** Automating slider controls and element reordering.
-* **Context Actions:** Handling Right-Click (Context Menu) and Double-Click events.
-* **Hover Effects:** Interacting with dynamic navigation menus that only appear on mouse hover.
-
-### => 3. Dynamic Element Handling
-
-Robust strategies for locating and interacting with elements:
-
-* **Synchronization:** Replaced static `time.sleep` with dynamic `WebDriverWait` and `ExpectedConditions` to handle AJAX loading.
-* **Complex Locators:** Usage of advanced CSS Selectors and XPath axes (parent, child, sibling) to find elements without stable IDs.
-* **Frame Management:** Logic to seamlessly switch context between multiple Browser Tabs, Windows, and iFrames.
-
-### => 4. Cross-Browser Infrastructure
-
-The framework is browser-agnostic. It utilizes `webdriver_manager` to automatically detect the installed browser version and download the matching binary (ChromeDriver, GeckoDriver, EdgeDriver) at runtime, eliminating manual path configuration.
+* **Complex Actions:** Utilization of `ActionChains` for context clicks, double clicks, drag-and-drop, and hover effects.
+* **Synchronization:** Robust `WebDriverWait` implementation to handle AJAX and dynamic DOM elements.
 
 ---
 
@@ -91,37 +76,38 @@ The framework is browser-agnostic. It utilizes `webdriver_manager` to automatica
 
 ### => Prerequisites
 
-* Python 3.8 or higher
-* Google Chrome, Firefox, or Microsoft Edge browser
+* Python 3.8+
+* Java Runtime Environment (JRE) 11+ (For Selenium Grid)
+* Browser Drivers (Chromedriver/GeckoDriver)
 
-### => Step 1: Clone Repository
+### => Step 1: Install Dependencies
 
 ```bash
-git clone [https://github.com/YourUsername/alnafi-selenium-automation.git](https://github.com/YourUsername/alnafi-selenium-automation.git)
-cd alnafi-selenium-automation
+pip install -r requirements.txt
 
 ```
 
-### => Step 2: Install Dependencies
+### => Step 2: Start the Infrastructure
 
+1. **Launch the Hub:**
 ```bash
-pip install selenium webdriver-manager beautifulsoup4
+java -jar Selenium-Grid/selenium-server-4.38.0.jar hub
 
 ```
 
-### => Step 3: Run Automation Scripts
 
-**Example 1: Run a Stealth Login**
-
+2. **Launch a Node:**
 ```bash
-python gmail_login-1.py
+java -jar Selenium-Grid/selenium-server-4.38.0.jar node --detect-drivers true
 
 ```
 
-**Example 2: Run Advanced Mouse Actions**
+
+
+### => Step 3: Run the Test
 
 ```bash
-python drag_slider_range.py
+python Selenium-Grid/selenium_grid_test.py
 
 ```
 
@@ -130,24 +116,17 @@ python drag_slider_range.py
 ## ==>> Project Structure
 
 ```text
-├── Drivers/                   # Local driver binaries (optional fallback)
-├── screenshot/                # Directory for automated evidence capture
-├── Alert_handeling.py         # JavaScript Alert management
-├── drag_slider_range.py       # ActionChains drag-and-drop logic
-├── gmail_login-1.py           # Stealth login implementation
-├── scraping.py                # BeautifulSoup data extraction integration
-├── screenshot_full_page.py    # JavaScript-based full page capture
-├── tab_handling.py            # Multi-window switching logic
-├── web_driver_auto_update.py  # Driver manager configuration
-└── README.md                  # Project documentation
+├── Selenium-Grid/
+│   ├── selenium-server-4.38.0.jar  # Grid Server (Java)
+│   ├── selenium_grid_test.py       # Remote Execution Script
+├── screenshot/                     # Evidence Capture
+├── gmail_login-1.py                # Stealth Login Logic
+├── complex-element(...).py         # Advanced Mouse Actions
+├── web_driver_auto_update.py       # Driver Manager
+├── requirements.txt                # Dependencies
+└── README.md                       # Documentation
 
 ```
-
----
-
-## ==>> Disclaimer
-
-This project is for **educational and testing purposes only**. The stealth techniques demonstrated here are intended to help QA engineers understand how to test robust applications and should not be used for unauthorized scraping or botting activities.
 
 ---
 
@@ -156,8 +135,5 @@ This project is for **educational and testing purposes only**. The stealth techn
 **Saleem Ali**
 
 * **Role:** QA Automation Engineer & SDET
-* **Focus:** Building reliable, scalable, and human-like automation frameworks.
+* **Focus:** Distributed Testing Systems & Automation Architecture.
 
-```
-
-```
