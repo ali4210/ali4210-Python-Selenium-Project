@@ -1,0 +1,254 @@
+# ==============================================================================
+# SELENIUM AUTOMATION & GRID - PYTHON DEPENDENCIES
+# ==============================================================================
+# Project: Selenium Automation Suite with Grid 4 Architecture
+# Author: Saleem Ali | AIOps Engineer
+# Python Version: 3.8+
+# Last Updated: December 2024
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# CORE SELENIUM
+# ------------------------------------------------------------------------------
+# WebDriver API for browser automation
+# Latest stable version with full Grid 4 support
+selenium==4.38.0
+
+# ------------------------------------------------------------------------------
+# WEBDRIVER MANAGEMENT
+# ------------------------------------------------------------------------------
+# Auto-download and manage browser drivers (chromedriver, geckodriver, etc.)
+# Eliminates manual driver updates and version compatibility issues
+webdriver-manager==4.0.1
+
+# ------------------------------------------------------------------------------
+# WEB SCRAPING & HTML PARSING
+# ------------------------------------------------------------------------------
+# BeautifulSoup4: Parse HTML/XML documents for data extraction
+# Works seamlessly with Selenium for advanced scraping
+beautifulsoup4==4.12.2
+
+# Requests: HTTP library for API calls and web requests
+# Useful for REST API testing alongside browser automation
+requests==2.31.0
+
+# lxml: Fast XML/HTML parser (BeautifulSoup backend)
+# Improves parsing performance
+lxml==4.9.3
+
+# ------------------------------------------------------------------------------
+# DATA PROCESSING & ANALYSIS
+# ------------------------------------------------------------------------------
+# Pandas: Data manipulation and analysis
+# Process scraped data, generate reports, CSV handling
+pandas==2.1.0
+
+# NumPy: Numerical computing (pandas dependency)
+numpy==1.24.3
+
+# ------------------------------------------------------------------------------
+# SECURITY & CREDENTIALS MANAGEMENT
+# ------------------------------------------------------------------------------
+# python-dotenv: Load environment variables from .env file
+# CRITICAL for secure password/API key management
+python-dotenv==1.0.0
+
+# ------------------------------------------------------------------------------
+# TESTING FRAMEWORKS (Optional but Recommended)
+# ------------------------------------------------------------------------------
+# pytest: Modern testing framework
+# Organize and run Selenium tests efficiently
+pytest==7.4.0
+
+# pytest-html: Generate HTML test reports
+pytest-html==3.2.0
+
+# pytest-xdist: Run tests in parallel
+# Complements Grid for local parallel execution
+pytest-xdist==3.3.1
+
+# ------------------------------------------------------------------------------
+# REPORTING & LOGGING
+# ------------------------------------------------------------------------------
+# Allure: Beautiful test reports
+allure-pytest==2.13.2
+
+# colorlog: Colored terminal logs for better debugging
+colorlog==6.7.0
+
+# ------------------------------------------------------------------------------
+# SCREENSHOTS & IMAGE PROCESSING
+# ------------------------------------------------------------------------------
+# Pillow: Image processing library
+# Manipulate screenshots, compare images, etc.
+Pillow==10.0.0
+
+# ------------------------------------------------------------------------------
+# DATE & TIME UTILITIES
+# ------------------------------------------------------------------------------
+# python-dateutil: Advanced date/time manipulation
+# Useful for timestamp-based screenshot naming
+python-dateutil==2.8.2
+
+# ------------------------------------------------------------------------------
+# CONFIGURATION MANAGEMENT
+# ------------------------------------------------------------------------------
+# PyYAML: YAML configuration file parser
+# Manage test configurations, Grid settings
+PyYAML==6.0.1
+
+# configparser: INI file parser (standard library enhancement)
+configparser==6.0.0
+
+# ------------------------------------------------------------------------------
+# HTTP & API TESTING
+# ------------------------------------------------------------------------------
+# urllib3: HTTP client (requests dependency)
+# Advanced connection pooling
+urllib3==2.0.4
+
+# certifi: SSL certificate bundle
+# Ensures secure HTTPS connections
+certifi==2023.7.22
+
+# ------------------------------------------------------------------------------
+# BROWSER-SPECIFIC DEPENDENCIES
+# ------------------------------------------------------------------------------
+# NOTE: Browser binaries installed separately
+# Chrome: https://www.google.com/chrome/
+# Firefox: https://www.mozilla.org/firefox/
+# Edge: https://www.microsoft.com/edge
+
+# ------------------------------------------------------------------------------
+# SELENIUM GRID REQUIREMENTS
+# ------------------------------------------------------------------------------
+# NOTE: Selenium Grid server requires Java 11+
+# Download: selenium-server-4.38.0.jar
+# From: https://github.com/SeleniumHQ/selenium/releases
+
+# Grid runs independently of Python, but can be controlled via:
+# - subprocess (Python standard library)
+# - os commands
+
+# ------------------------------------------------------------------------------
+# DEVELOPMENT DEPENDENCIES (Optional)
+# ------------------------------------------------------------------------------
+# autopep8: Auto-format Python code
+autopep8==2.0.4
+
+# pylint: Code quality checker
+pylint==2.17.5
+
+# black: Opinionated code formatter
+black==23.7.0
+
+# isort: Import statement organizer
+isort==5.12.0
+
+# ------------------------------------------------------------------------------
+# TYPE CHECKING (Optional but Professional)
+# ------------------------------------------------------------------------------
+# mypy: Static type checker for Python
+mypy==1.5.0
+
+# types-requests: Type stubs for requests library
+types-requests==2.31.0.2
+
+# ------------------------------------------------------------------------------
+# CI/CD INTEGRATION
+# ------------------------------------------------------------------------------
+# Coverage: Code coverage measurement
+coverage==7.3.0
+
+# pytest-cov: Coverage plugin for pytest
+pytest-cov==4.1.0
+
+# ------------------------------------------------------------------------------
+# DEBUGGING & PROFILING
+# ------------------------------------------------------------------------------
+# ipdb: Enhanced Python debugger
+ipdb==0.13.13
+
+# memory_profiler: Monitor memory usage
+memory-profiler==0.61.0
+
+# ------------------------------------------------------------------------------
+# INSTALLATION INSTRUCTIONS
+# ------------------------------------------------------------------------------
+# Install all dependencies:
+#   pip install -r requirements.txt
+#
+# Install only core dependencies (minimal):
+#   pip install selenium==4.38.0 webdriver-manager==4.0.1
+#
+# Install with development tools:
+#   pip install -r requirements.txt
+#
+# Upgrade all packages:
+#   pip install --upgrade -r requirements.txt
+#
+# Create virtual environment (recommended):
+#   python -m venv venv
+#   source venv/bin/activate  # Linux/Mac
+#   venv\Scripts\activate     # Windows
+#   pip install -r requirements.txt
+#
+# Freeze current environment:
+#   pip freeze > requirements-lock.txt
+#
+# ==============================================================================
+# COMPATIBILITY NOTES
+# ==============================================================================
+# - Python 3.8+: All packages compatible
+# - Python 3.9+: Recommended for best performance
+# - Python 3.10+: Full type hints support
+# - Python 3.11+: Performance improvements (~25% faster)
+#
+# Operating Systems:
+# - Windows 10/11 ✅
+# - macOS 10.14+ ✅
+# - Linux (Ubuntu 20.04+, CentOS 8+) ✅
+#
+# Browser Support:
+# - Chrome 90+ ✅
+# - Firefox 88+ ✅
+# - Edge 90+ ✅
+# - Safari 14+ ⚠️ (Limited WebDriver support)
+#
+# ==============================================================================
+# TROUBLESHOOTING
+# ==============================================================================
+# If installation fails:
+#
+# 1. Upgrade pip:
+#    pip install --upgrade pip
+#
+# 2. Install build tools (if needed):
+#    Windows: Install Visual C++ Build Tools
+#    Linux: sudo apt-get install build-essential
+#    macOS: xcode-select --install
+#
+# 3. Individual package install:
+#    pip install selenium
+#    pip install webdriver-manager
+#    (etc.)
+#
+# 4. Use Python 3.9+ for best compatibility
+#
+# 5. Clear pip cache:
+#    pip cache purge
+#
+# ==============================================================================
+# SECURITY NOTES
+# ==============================================================================
+# - NEVER commit .env files to Git
+# - Keep dependencies updated: pip list --outdated
+# - Use virtual environments to isolate projects
+# - Review package changelogs before upgrading
+# - Use pip-audit to check for vulnerabilities:
+#   pip install pip-audit
+#   pip-audit
+#
+# ==============================================================================
+# END OF REQUIREMENTS
+# ==============================================================================
